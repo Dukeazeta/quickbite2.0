@@ -74,25 +74,53 @@ class HomeScreen extends StatelessWidget {
                           Text(
                             dish.name,
                             style: Theme.of(context).textTheme.titleMedium,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                          const SizedBox(height: 4),
-                          Text(
-                            '\$${dish.price.toStringAsFixed(2)}',
-                            style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                                  color: Theme.of(context).colorScheme.primary,
-                                  fontWeight: FontWeight.bold,
+                                    ),
+                                    const SizedBox(height: 4),
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          '\$${dish.price.toStringAsFixed(2)}',
+                                          style: const TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold,
+                                            color: AppTheme.primaryColor,
+                                          ),
+                                        ),
+                                        Container(
+                                          decoration: BoxDecoration(
+                                            color: AppTheme.primaryColor,
+                                            borderRadius: BorderRadius.circular(12),
+                                          ),
+                                          child: IconButton(
+                                            icon: const Icon(
+                                              Icons.add,
+                                              color: Colors.white,
+                                              size: 20,
+                                            ),
+                                            onPressed: () {},
+                                            constraints: const BoxConstraints(
+                                              minWidth: 32,
+                                              minHeight: 32,
+                                            ),
+                                            padding: EdgeInsets.zero,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
                                 ),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
+                        );
+                      },
+                      childCount: filteredDishes.length,
                     ),
-                  ],
-                ),
-              );
-            },
-          );
+                  ),
+                );
+              },
+            ),
         },
       ),
     );
