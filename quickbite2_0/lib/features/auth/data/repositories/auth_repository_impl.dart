@@ -12,7 +12,7 @@ class AuthRepositoryImpl implements AuthRepository {
       return;
     }
     
-    throw Exception('Invalid Login Details);
+    throw Exception('Invalid Login Details');
   }
 
   @override

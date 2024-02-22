@@ -177,14 +177,28 @@ class LoginView extends StatelessWidget {
   }
 }
 
-class _EmailInput extends StatelessWidget {
+class _EmailInput extends StatefulWidget {
   const _EmailInput();
+
+  @override
+  State<_EmailInput> createState() => _EmailInputState();
+}
+
+class _EmailInputState extends State<_EmailInput> {
+  final _emailController = TextEditingController();
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return CustomTextField(
       hintText: 'Email or Phone Number',
       keyboardType: TextInputType.emailAddress,
+      controller: _emailController,
       onChanged: (email) {
         context.read<AuthBloc>().add(EmailChanged(email));
       },
@@ -192,14 +206,28 @@ class _EmailInput extends StatelessWidget {
   }
 }
 
-class _PasswordInput extends StatelessWidget {
+class _PasswordInput extends StatefulWidget {
   const _PasswordInput();
+
+  @override
+  State<_PasswordInput> createState() => _PasswordInputState();
+}
+
+class _PasswordInputState extends State<_PasswordInput> {
+  final _passwordController = TextEditingController();
+
+  @override
+  void dispose() {
+    _passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return CustomTextField(
       hintText: 'Password',
       isPassword: true,
+      controller: _passwordController,
       onChanged: (password) {
         context.read<AuthBloc>().add(PasswordChanged(password));
       },

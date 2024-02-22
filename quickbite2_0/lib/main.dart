@@ -30,7 +30,11 @@ class QuickBiteApp extends StatelessWidget {
             brightness: Brightness.light,
           ),
         ),
-        home: const LoginScreen(),
+        initialRoute: '/',
+        routes: {
+          '/': (context) => const LoginScreen(),
+          '/home': (context) => const HomeScreen(),
+        },
       ),
     );
   }
