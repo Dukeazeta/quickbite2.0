@@ -111,7 +111,7 @@ class _PasswordInput extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomTextField(
       hintText: 'Password (admin)',
-      obscureText: true,
+      isPassword: true,
       onChanged: (password) {
         context.read<AuthBloc>().add(PasswordChanged(password));
       },
@@ -128,12 +128,13 @@ class _LoginButton extends StatelessWidget {
       buildWhen: (previous, current) => previous.status != current.status,
       builder: (context, state) {
         return CustomButton(
+          text: state.status == AuthStatus.loading ? '' : 'Login',
           onPressed: state.status == AuthStatus.loading
-              ? null
+              ? () {} 
               : () {
                   context.read<AuthBloc>().add(const SignInSubmitted());
                 },
-          child: state.status == AuthStatus.loading
+          icon: state.status == AuthStatus.loading
               ? const SizedBox(
                   height: 20,
                   width: 20,
@@ -142,7 +143,7 @@ class _LoginButton extends StatelessWidget {
                     color: Colors.white,
                   ),
                 )
-              : const Text('Login'),
+              : null,
         );
       },
     );

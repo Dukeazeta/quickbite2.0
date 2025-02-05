@@ -5,10 +5,7 @@ class AuthRepositoryImpl implements AuthRepository {
   static const _adminPassword = 'admin';
 
   @override
-  Future<void> signIn({
-    required String email,
-    required String password,
-  }) async {
+  Future<void> signInWithEmailAndPassword(String email, String password) async {
     await Future.delayed(const Duration(milliseconds: 300)); // Simulate network delay
     
     if (email == _adminEmail && password == _adminPassword) {
@@ -19,15 +16,21 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<void> signOut() async {
+  Future<void> signUpWithEmailAndPassword(String email, String password) async {
     await Future.delayed(const Duration(milliseconds: 300)); // Simulate network delay
+    // TODO: Implement actual sign up logic
+    throw UnimplementedError('Sign up not implemented yet');
   }
 
   @override
-  Future<void> signUp({
-    required String email,
-    required String password,
-  }) async {
-    throw UnimplementedError();
+  Future<void> signOut() async {
+    await Future.delayed(const Duration(milliseconds: 300)); // Simulate network delay
+    // TODO: Implement actual sign out logic
+  }
+
+  @override
+  Future<bool> isAuthenticated() async {
+    // TODO: Implement actual authentication check
+    return false;
   }
 }
