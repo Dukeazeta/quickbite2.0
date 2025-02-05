@@ -29,26 +29,27 @@ class CustomButton extends StatelessWidget {
         style: ElevatedButton.styleFrom(
           backgroundColor: backgroundColor,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(25),
             side: hasBorder
                 ? BorderSide(color: Colors.grey[300]!)
                 : BorderSide.none,
           ),
           elevation: 0,
+          padding: const EdgeInsets.symmetric(horizontal: 16),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             if (icon != null) ...[
               icon!,
-              const SizedBox(width: 8),
+              const SizedBox(width: 12),
             ],
             Text(
               text,
               style: TextStyle(
                 color: textColor,
                 fontSize: 16,
-                fontWeight: FontWeight.w600,
+                fontWeight: FontWeight.w500,
               ),
             ),
           ],
