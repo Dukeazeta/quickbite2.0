@@ -18,11 +18,13 @@ class AppTheme {
     fontSize: 24,
     fontWeight: FontWeight.bold,
     color: textColor,
+    fontFamily: 'SpaceGrotesk',
   );
 
   static const TextStyle bodyLarge = TextStyle(
     fontSize: 16,
     color: textColor,
+    fontFamily: 'SpaceGrotesk',
   );
 
   // Spacing

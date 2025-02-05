@@ -23,6 +23,7 @@ class QuickBiteApp extends StatelessWidget {
         theme: ThemeData(
           // Using Material 3 for modern, minimal design
           useMaterial3: true,
+          fontFamily: 'SpaceGrotesk',
           colorScheme: ColorScheme.fromSeed(
             seedColor: Colors.orange,
             brightness: Brightness.light,
