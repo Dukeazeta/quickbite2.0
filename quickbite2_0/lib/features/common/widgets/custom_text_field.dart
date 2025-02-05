@@ -22,31 +22,41 @@ class CustomTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 8),
-      decoration: BoxDecoration(
-        color: Colors.grey[100],
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Colors.black),
-      ),
       child: TextFormField(
         controller: controller,
         obscureText: isPassword,
         keyboardType: keyboardType,
         onChanged: onChanged,
+        style: const TextStyle(fontSize: 16),
         decoration: InputDecoration(
           hintText: hintText,
+          hintStyle: TextStyle(
+            color: Colors.grey[400],
+            fontSize: 16,
+          ),
           errorText: errorText,
+          filled: true,
+          fillColor: Colors.grey[50],
           border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(25),
+            borderSide: BorderSide.none,
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(25),
+            borderSide: BorderSide.none,
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(25),
             borderSide: BorderSide.none,
           ),
           contentPadding: const EdgeInsets.symmetric(
-            horizontal: 16,
+            horizontal: 20,
             vertical: 16,
           ),
           suffixIcon: isPassword
               ? Icon(
                   Icons.visibility_outlined,
-                  color: Colors.grey[600],
+                  color: Colors.grey[400],
                 )
               : null,
         ),
