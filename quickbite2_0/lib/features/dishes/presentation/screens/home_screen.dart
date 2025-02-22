@@ -84,12 +84,12 @@ class HomeScreen extends StatelessWidget {
                                           style: const TextStyle(
                                             fontSize: 16,
                                             fontWeight: FontWeight.bold,
-                                            color: AppTheme.primaryColor,
+                                            color: Colors.blue,
                                           ),
                                         ),
                                         Container(
                                           decoration: BoxDecoration(
-                                            color: AppTheme.primaryColor,
+                                            color: Theme.of(context).colorScheme.primary,
                                             borderRadius: BorderRadius.circular(12),
                                           ),
                                           child: IconButton(
@@ -115,7 +115,7 @@ class HomeScreen extends StatelessWidget {
                           ),
                         );
                       },
-                      childCount: filteredDishes.length,
+                      itemCount: dishes.length,
                     ),
                   ),
                 );
