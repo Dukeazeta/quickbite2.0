@@ -59,7 +59,9 @@ class _LocationSelectorState extends State<LocationSelector> {
                 ),
                 onChanged: (query) {
                   if (query.isNotEmpty) {
-                    context.read<LocationBloc>().add(SearchLocationsEvent(query));
+                    context
+                        .read<LocationBloc>()
+                        .add(SearchLocationsEvent(query));
                   }
                 },
               ),
@@ -90,7 +92,9 @@ class _LocationSelectorState extends State<LocationSelector> {
                             title: Text(location.name ?? 'Unknown Location'),
                             subtitle: Text(location.address),
                             onTap: () {
-                              context.read<LocationBloc>().add(SelectLocationEvent(location));
+                              context
+                                  .read<LocationBloc>()
+                                  .add(SelectLocationEvent(location));
                               Navigator.pop(context);
                             },
                           );
