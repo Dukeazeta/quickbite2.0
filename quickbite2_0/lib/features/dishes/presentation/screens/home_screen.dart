@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:quickbite2_0/features/dishes/data/repositories/dishes_repository_impl.dart';
-import 'package:quickbite2_0/features/dishes/domain/models/dish.dart';
+import 'package:quickbite2_0/features/dishes/presentation/widgets/food_category_icon.dart';
+import 'package:quickbite2_0/features/dishes/presentation/widgets/promo_banner.dart';
+import 'package:quickbite2_0/features/dishes/presentation/widgets/restaurant_card.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -16,91 +17,20 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final repository = DishesRepositoryImpl();
-
     return Scaffold(
-      appBar: _buildAppBar(),
-      body: FutureBuilder<List<Dish>>(
-        future: repository.getAllDishes(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          }
-
-          if (snapshot.hasError) {
-            return Center(
+      body: SafeArea(
+        child: CustomScrollView(
+          slivers: [
+            SliverToBoxAdapter(
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Icon(Icons.error_outline, size: 48, color: Colors.red),
-                  const SizedBox(height: 16),
-                  Text(
-                    'Error: ${snapshot.error}',
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(color: Colors.red),
-                  ),
+                  _buildHeader(),
+                  _buildSearchBar(),
+                  _buildCategories(),
+                  _buildPromoBanner(),
+                  _buildFastestNearYou(),
                 ],
-              ),
-            );
-          }
-
-          final dishes = snapshot.data ?? [];
-          return _buildDishesGrid(dishes);
-        },
-      ),
-    );
-  }
-
-  AppBar _buildAppBar() {
-    return AppBar(
-      title: const Text('QuickBite'),
-      centerTitle: true,
-      elevation: 0,
-    );
-  }
-
-  Widget _buildDishesGrid(List<Dish> dishes) {
-    return GridView.builder(
-      padding: const EdgeInsets.all(16),
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        childAspectRatio: 0.8,
-        crossAxisSpacing: 12,
-        mainAxisSpacing: 12,
-      ),
-      itemCount: dishes.length,
-      itemBuilder: (context, index) => _buildDishCard(context, dishes[index]),
-    );
-  }
-
-  Widget _buildDishCard(BuildContext context, Dish dish) {
-    return Card(
-      clipBehavior: Clip.antiAlias,
-      elevation: 2,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: SizedBox(
-        height: 280,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(
-              flex: 3,
-              child: _buildDishImage(dish.imageUrl),
-            ),
-            Expanded(
-              flex: 2,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    _buildDishName(context, dish.name),
-                    const SizedBox(height: 4),
-                    _buildPriceAndAddButton(context, dish.price),
-                  ],
-                ),
               ),
             ),
           ],
@@ -109,74 +39,121 @@ class HomeView extends StatelessWidget {
     );
   }
 
-  Widget _buildDishImage(String imageUrl) {
-    return Expanded(
-      child: Image.network(
-        imageUrl,
-        fit: BoxFit.cover,
-        width: double.infinity,
-        loadingBuilder: (context, child, loadingProgress) {
-          if (loadingProgress == null) return child;
-          return Center(
-            child: CircularProgressIndicator(
-              value: loadingProgress.expectedTotalBytes != null
-                  ? loadingProgress.cumulativeBytesLoaded /
-                      loadingProgress.expectedTotalBytes!
-                  : null,
-            ),
-          );
-        },
+  Widget _buildHeader() {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Row(
+        children: [
+          Icon(Icons.location_on, color: Colors.orange),
+          SizedBox(width: 8),
+          Text(
+            '1226 University Dr',
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+          ),
+          Icon(Icons.keyboard_arrow_down),
+          Spacer(),
+          IconButton(
+            icon: Icon(Icons.notifications_none),
+            onPressed: () {},
+          ),
+          IconButton(
+            icon: Icon(Icons.shopping_cart_outlined),
+            onPressed: () {},
+          ),
+        ],
       ),
     );
   }
 
-  Widget _buildDishName(BuildContext context, String name) {
-    return Flexible(
-      child: Text(
-        name,
-        style: Theme.of(context).textTheme.titleMedium?.copyWith(
-              fontSize: 14,
-            ),
-        maxLines: 2,
-        overflow: TextOverflow.ellipsis,
+  Widget _buildSearchBar() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      child: TextField(
+        decoration: InputDecoration(
+          hintText: 'Search "Ice Cream"',
+          prefixIcon: Icon(Icons.search),
+          suffixIcon: Icon(Icons.tune),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+            borderSide: BorderSide.none,
+          ),
+          filled: true,
+          fillColor: Colors.grey[100],
+        ),
       ),
     );
   }
 
-  Widget _buildPriceAndAddButton(BuildContext context, double price) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  Widget _buildCategories() {
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      padding: EdgeInsets.all(16),
+      child: Row(
+        children: [
+          FoodCategoryIcon(
+            iconPath: 'assets/images/deals.png',
+            label: 'Deals',
+            onTap: () {},
+          ),
+          SizedBox(width: 16),
+          FoodCategoryIcon(
+            iconPath: 'assets/images/dashmart.png',
+            label: 'DashMart',
+            onTap: () {},
+          ),
+          SizedBox(width: 16),
+          FoodCategoryIcon(
+            iconPath: 'assets/images/convenience.png',
+            label: 'Convenience',
+            onTap: () {},
+          ),
+          // Add more categories as needed
+        ],
+      ),
+    );
+  }
+
+  Widget _buildPromoBanner() {
+    return PromoBanner(
+      title: '40% off 1st order, up to \$10',
+      subtitle: '+\$0 delivery fee on orders \$15+ with code GET40OFF1',
+      imageUrl: 'https://example.com/promo-image.jpg',
+      onTap: () {},
+    );
+  }
+
+  Widget _buildFastestNearYou() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          '\$${price.toStringAsFixed(2)}',
-          style: const TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
-            color: Colors.blue,
+        Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Text(
+            'Fastest near you',
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
         ),
-        Container(
-          decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.primary,
-            borderRadius: BorderRadius.circular(12),
-          ),
-          child: IconButton(
-            icon: const Icon(
-              Icons.add,
-              color: Colors.white,
-              size: 20,
-            ),
-            onPressed: () {
-              // TODO: Implement add to cart functionality
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Added to cart')),
-              );
-            },
-            constraints: const BoxConstraints(
-              minWidth: 32,
-              minHeight: 32,
-            ),
-            padding: EdgeInsets.zero,
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          padding: EdgeInsets.symmetric(horizontal: 16),
+          child: Row(
+            children: [
+              RestaurantCard(
+                name: 'Starbucks',
+                imageUrl: 'https://example.com/starbucks.jpg',
+                deliveryTime: '10-15 min',
+                rating: 4.5,
+                onTap: () {},
+              ),
+              RestaurantCard(
+                name: 'McDonald\'s',
+                imageUrl: 'https://example.com/mcdonalds.jpg',
+                deliveryTime: '15-25 min',
+                rating: 4.2,
+                onTap: () {},
+              ),
+              // Add more restaurants as needed
+            ],
           ),
         ),
       ],
