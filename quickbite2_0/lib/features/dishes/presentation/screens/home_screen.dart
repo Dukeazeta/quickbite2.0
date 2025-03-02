@@ -80,22 +80,31 @@ class HomeView extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _buildDishImage(dish.imageUrl),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _buildDishName(context, dish.name),
-                const SizedBox(height: 4),
-                _buildPriceAndAddButton(context, dish.price),
-              ],
+      child: SizedBox(
+        height: 280,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              flex: 3,
+              child: _buildDishImage(dish.imageUrl),
             ),
-          ),
-        ],
+            Expanded(
+              flex: 2,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _buildDishName(context, dish.name),
+                    const SizedBox(height: 4),
+                    _buildPriceAndAddButton(context, dish.price),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

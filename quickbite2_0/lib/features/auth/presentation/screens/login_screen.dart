@@ -98,41 +98,17 @@ class LoginView extends StatelessWidget {
                         ),
                         const SizedBox(height: 16),
                         const _LoginButton(),
-                        const SizedBox(height: 20),
-                        Row(
-                          children: [
-                            Expanded(child: Divider(color: Colors.grey[300])),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 16),
-                              child: Text(
-                                'or',
-                                style: TextStyle(
-                                  color: Colors.grey[600],
-                                  fontSize: 14,
-                                ),
-                              ),
-                            ),
-                            Expanded(child: Divider(color: Colors.grey[300])),
-                          ],
-                        ),
-                        const SizedBox(height: 20),
+                        const SizedBox(height: 16),
                         CustomButton(
-                          text: 'Sign up with Apple',
-                          onPressed: () {},
-                          backgroundColor: Colors.black,
-                          textColor: Colors.white,
-                          icon: const Icon(Icons.apple, color: Colors.white),
-                        ),
-                        const SizedBox(height: 12),
-                        CustomButton(
-                          text: 'Sign up with Google',
+                          text: 'Continue with Google',
                           onPressed: () {},
                           backgroundColor: Colors.white,
                           textColor: Colors.black87,
                           hasBorder: true,
-                          icon: Image.network(
-                            'https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg',
-                            height: 20,
+                          icon: Image.asset(
+                            'assets/images/google_logo.png',
+                            width: 24,
+                            height: 24,
                           ),
                         ),
                         const SizedBox(height: 24),
