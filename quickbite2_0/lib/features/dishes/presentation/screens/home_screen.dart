@@ -62,11 +62,11 @@ class HomeView extends StatelessWidget {
   Widget _buildDishesGrid(List<Dish> dishes) {
     return GridView.builder(
       padding: const EdgeInsets.all(16),
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        childAspectRatio: 0.75,
-        crossAxisSpacing: 16,
-        mainAxisSpacing: 16,
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: MediaQuery.of(context).size.width > 600 ? 3 : 2,
+        childAspectRatio: 0.8,
+        crossAxisSpacing: 12,
+        mainAxisSpacing: 12,
       ),
       itemCount: dishes.length,
       itemBuilder: (context, index) => _buildDishCard(context, dishes[index]),
@@ -122,11 +122,15 @@ class HomeView extends StatelessWidget {
   }
 
   Widget _buildDishName(BuildContext context, String name) {
-    return Text(
-      name,
-      style: Theme.of(context).textTheme.titleMedium,
-      maxLines: 2,
-      overflow: TextOverflow.ellipsis,
+    return Flexible(
+      child: Text(
+        name,
+        style: Theme.of(context).textTheme.titleMedium?.copyWith(
+              fontSize: 14,
+            ),
+        maxLines: 2,
+        overflow: TextOverflow.ellipsis,
+      ),
     );
   }
 
