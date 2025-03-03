@@ -31,9 +31,14 @@ class QuickBiteApp extends StatelessWidget {
       child: MultiBlocProvider(
         providers: [
           BlocProvider(
-            create: (context) => LocationBloc(
-              locationRepository: context.read<LocationRepository>(),
-            ),
+            create: (context) {
+              final bloc = LocationBloc(
+                locationRepository: context.read<LocationRepository>(),
+              );
+              // Load last selected location when app starts
+              bloc.add(LoadLastLocationEvent());
+              return bloc;
+            },
           ),
         ],
         child: MaterialApp(
@@ -44,8 +49,43 @@ class QuickBiteApp extends StatelessWidget {
             useMaterial3: true,
             fontFamily: 'SpaceGrotesk',
             colorScheme: ColorScheme.fromSeed(
-              seedColor: Colors.orange,
-              brightness: Brightness.light,
+              seedColor: const Color(0xFFE32F45),
+              brightness: Brightness.dark,
+            ),
+            scaffoldBackgroundColor: const Color(0xFF1A1A1A),
+            appBarTheme: const AppBarTheme(
+              backgroundColor: Colors.transparent,
+              elevation: 0,
+            ),
+            textTheme: const TextTheme(
+              headlineLarge: TextStyle(
+                  color: Colors.white,
+                  fontSize: 28,
+                  fontWeight: FontWeight.bold),
+              headlineMedium: TextStyle(
+                  color: Colors.white,
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold),
+              titleLarge: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20,
+                  fontWeight: FontWeight.w600),
+              bodyLarge: TextStyle(color: Colors.white, fontSize: 16),
+              bodyMedium: TextStyle(color: Colors.white70, fontSize: 14),
+            ),
+            cardTheme: CardTheme(
+              color: const Color(0xFF2A2A2A),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16)),
+            ),
+            inputDecorationTheme: InputDecorationTheme(
+              filled: true,
+              fillColor: const Color(0xFF2A2A2A),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12),
+                borderSide: BorderSide.none,
+              ),
+              hintStyle: const TextStyle(color: Colors.white54),
             ),
           ),
           initialRoute: '/',
